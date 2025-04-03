@@ -29,7 +29,6 @@ export const subscriptionPlans = [
             ` Até ${PLANS["BASIC"].maxServices} Serviços`,
             'Agendamentos ilimitados',
             'Suporte',
-            'Relatórios'
         ]
 
     },
@@ -43,7 +42,6 @@ export const subscriptionPlans = [
             ` Até ${PLANS["PROFESSIONAL"].maxServices} Serviços`,
             'Agendamentos ilimitados',
             'Suporte prioritario',
-            'Relatórios avançados'
         ]
 
     }

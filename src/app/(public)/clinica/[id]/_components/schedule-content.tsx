@@ -125,7 +125,23 @@ export function ScheduleContent({clinic}: ScheduleContentProps) {
             return
         }
 
-        toast.success("Consulta agendada com sucesso")
+        toast.success(
+            <div>
+                <a target='_blank' href={`https://wa.me/55${clinic?.phone?.replace(/\D/g, '')}?text=Olá!%0A%0ADesejo confirmar o meu agendamento.`}>
+                Confirme seu agendamento aqui
+                </a>
+
+            </div>,
+            {
+              duration: Infinity, // Impede que o toast desapareça automaticamente
+              closeButton: true, // Adiciona um botão de fechamento
+              position: 'top-right', // Define a posição do toast
+            }
+          );
+          
+          
+          
+          
         form.reset()
         setSelectedTime("")
     }

@@ -28,10 +28,10 @@ export function Professionals({professionals}: ProfessionalProps) {
         <section className="bg-gray-50 py-16">
             <div className="container mx-auto px-4sm:px-6 lg:px-8">
                 <h2 className="text-3xl text-center mb-12 font-bold">
-                    Clinicas disponiveis
+                    Profissionais Disponíveis
                 </h2>
 
-                <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <section className="grid grid-cols-1 gap-6 px-10 py-2 sm:grid-cols-2 lg:grid-cols-4">
                     {professionals.map((clinic) => (
                         <Card className="overflow-hidden py-0 hover:shadow-lg duration-300" key={clinic.id}>
                             <CardContent className="p-0">

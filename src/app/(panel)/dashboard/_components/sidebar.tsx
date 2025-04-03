@@ -61,12 +61,7 @@ export function SidebarDashboard({children}: {children: React.ReactNode}) {
             })}>
                 <div className="mb-6 mt-4">
                     {!isCollapsed && (
-                        <Image
-                            src={odontoPRO}
-                            alt="Logo do odontoPRO"
-                            priority
-                            quality={100}
-                        />
+                        <h1 className="text-4xl font-bold">Agenda<span className="text-[#42ff7c]">PRO</span></h1>
                     )}
                 </div>
 
@@ -185,12 +180,12 @@ export function SidebarDashboard({children}: {children: React.ReactNode}) {
                             </SheetTrigger>
 
                             <h1 className="text-base md:text-lg font-semibold">
-                                Menu OdontoPRO
+                                Menu Agenda<span className="text-[#42ff7c]">PRO</span>
                             </h1>
                         </div>
 
                         <SheetContent side="right" className="sm:max-w-xs text-black px-7 py-5 gap-0">
-                        <SheetTitle className="text-2xl">Odonto<span className="text-emerald-500">PRO</span></SheetTitle>
+                        <SheetTitle className="text-2xl">Agenda<span className="text-[#42ff7c]">PRO</span></SheetTitle>
                         <SheetDescription>
                             Menu administrativo
                         </SheetDescription>

@@ -125,7 +125,8 @@ export function Header() {
     import { useSession } from "next-auth/react"
     import { handleRegister } from "../_actions/login" // Ajuste o caminho se necessário
     import { FcGoogle } from "react-icons/fc";
-    import { FaGithub, FaInstagram } from "react-icons/fa" // Ícone do GitHub
+import Image from "next/image"
+
     
     export function Header() {
         const { data: session, status } = useSession()
@@ -165,14 +166,25 @@ export function Header() {
                 {status === "loading" ? (
                     <></>
                 ) : session ? (
+                    <div className="flex flex-col md:flex-row items-center gap-4">
+                    {session.user?.image && (
+                        <Image
+                            src={session.user.image} // Usa a URL da imagem de perfil fornecida pelo provedor (ex: Google)
+                            alt="Foto de Perfil"
+                            width={40} // Largura da imagem
+                            height={40} // Altura da imagem
+                            className="rounded-full" // Torna a imagem arredondada
+                        />
+                    )}
                     <Link
                         href="/dashboard"
-                        className="flex items-center justify-center gap-2 bg-zinc-900 text-white py-1 rounded-md px-4"
+                        className="flex items-center justify-center gap-2 bg-zinc-500 hover:bg-zinc-800 text-white py-1 rounded-md px-4"
                     >
-                        Acessar clinica
+                        Acessar Painel
                     </Link>
+                    </div>
                 ) : (
-                    <Button onClick={handleChange}> {/* Mostra o modal para escolher o login */}
+                    <Button onClick={handleChange}> 
                         <LogIn />
                         Portal da clinica
                     </Button>
@@ -184,7 +196,7 @@ export function Header() {
             <header className="fixed top-0 right-0 left-0 z-[999] py-4 px-6 bg-white">
                 <div className="container mx-auto flex items-center justify-between">
                     <Link href="/" className="text-3xl font-bold text-zinc-900">
-                        Odonto<span className="text-emerald-500">PRO</span>
+                        Agenda<span className="text-[#42ff7c]">PRO</span>
                     </Link>
     
                     <nav className="hidden md:flex items-center space-x-4">
@@ -215,7 +227,7 @@ export function Header() {
                 {isLoginModalOpen && (
                     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                         <div className="bg-white p-6 rounded-md text-center">
-                            <h1 className="text-2xl font-bold mb-2">Odonto<span className="text-emerald-500">PRO</span></h1>
+                            <h1 className="text-2xl font-bold mb-2">Agenda<span className="text-emerald-500">PRO</span></h1>
                             <h3 className="text-lg font-semibold">Faça login ou Crie sua conta com Google</h3>
                             <div className="mt-4">
                                 <Button

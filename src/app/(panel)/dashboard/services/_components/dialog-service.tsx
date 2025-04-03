@@ -183,7 +183,7 @@ export function DialogService({closeModal, serviceId, initialValue}: DialogServi
                                     <FormControl>
                                         <Input 
                                             {...field} 
-                                            placeholder='1'
+                                            placeholder='0'
                                             min="0"
                                             type='number'
                                         />

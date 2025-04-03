@@ -146,7 +146,7 @@ export function ProfileContent({user}: ProfileContentProps) {
                                     name='name'
                                     render={({field}) => (
                                         <FormItem>
-                                            <FormLabel className='font-semibold'>Nome completo</FormLabel>
+                                            <FormLabel className='font-semibold'>Nome</FormLabel>
                                             <FormControl>
                                                 <Input 
                                                     {...field} 
@@ -201,7 +201,7 @@ export function ProfileContent({user}: ProfileContentProps) {
                                     name='status'
                                     render={({field}) => (
                                         <FormItem>
-                                            <FormLabel className='font-semibold'>Status da clinica</FormLabel>
+                                            <FormLabel className='font-semibold'>Status</FormLabel>
                                             <FormControl>
                                                 <Select
                                                     onValueChange={field.onChange}
@@ -211,8 +211,8 @@ export function ProfileContent({user}: ProfileContentProps) {
                                                         <SelectValue placeholder="Selecione o status da clinica"/>
                                                     </SelectTrigger>
                                                     <SelectContent>
-                                                        <SelectItem value='active'>ATIVO (clinica aberta)</SelectItem>
-                                                        <SelectItem value='inactive'>INATIVO (clinica fechada)</SelectItem>
+                                                        <SelectItem value='active'>ATIVO (aberto)</SelectItem>
+                                                        <SelectItem value='inactive'>INATIVO (fechado)</SelectItem>
                                                     </SelectContent>
                                                 </Select>
                                             </FormControl>
@@ -222,7 +222,7 @@ export function ProfileContent({user}: ProfileContentProps) {
 
                                 <div className='space-y-2'>
                                     <Label className='font-semibold'>
-                                        Configurar horários da clinica
+                                        Configurar horários 
                                     </Label>
                                     <Dialog open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
                                         <DialogTrigger asChild>
@@ -233,9 +233,9 @@ export function ProfileContent({user}: ProfileContentProps) {
                                         </DialogTrigger>
                                         <DialogContent>
                                             <DialogHeader>
-                                                <DialogTitle>Horários da clinica</DialogTitle>
+                                                <DialogTitle>Horários</DialogTitle>
                                                 <DialogDescription>
-                                                    Selecione abaixo os horários de funcionamentos da clinica
+                                                    Selecione abaixo os horários de funcionamentos
                                                 </DialogDescription>
                                             </DialogHeader>
                                             <section className='py-4'>
