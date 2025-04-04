@@ -1,40 +1,52 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Plan } from "@prisma/client"
-import { createSubscription } from "../_actions/create-subscription"
-import { toast } from "sonner"
-import { getStripeJs } from "@/utils/stripe-js"
+import { Button } from "@/components/ui/button";
+import { Plan } from "@prisma/client";
+import { createSubscription } from "../_actions/create-subscription";
+import { toast } from "sonner";
+import { getStripeJs } from "@/utils/stripe-js";
+import { Loader } from "lucide-react";
+import { useState } from "react";
 
-interface SubscriptionButtonProps{
-    type: Plan
+interface SubscriptionButtonProps {
+  type: Plan;
 }
 
-export function SubscriptionButton({type}: SubscriptionButtonProps) {
+export function SubscriptionButton({ type }: SubscriptionButtonProps) {
+  const [isLoading, setIsLoading] = useState(false);
 
-    async function handleCreateBilling() {
-        const {sessionId, error} = await createSubscription({type: type})
-        
-        if(error){
-            toast.error(error)
-            return
-        }
+  async function handleCreateBilling() {
+    setIsLoading(true);
+    const { sessionId, error } = await createSubscription({ type: type });
 
-        const stripe = await getStripeJs();
-
-        if(stripe){
-            await stripe.redirectToCheckout({sessionId: sessionId})
-        }
-
-
+    if (error) {
+      toast.error(error);
+      return;
     }
 
-    return (
-        <Button 
-            className={`w-full ${type === "PROFESSIONAL" && "bg-emerald-500 hover:bg-emerald-400"}`}
-            onClick={handleCreateBilling}
-        >
-            Ativar assinatura
-        </Button>
-    )
+    const stripe = await getStripeJs();
+
+    if (stripe) {
+      await stripe.redirectToCheckout({ sessionId: sessionId });
+    }
+    setIsLoading(false);
+  }
+
+  return (
+    <Button
+      className={`w-full ${
+        type === "PROFESSIONAL" && "bg-emerald-500 hover:bg-emerald-400"
+      }`}
+      onClick={handleCreateBilling}
+      disabled={isLoading}
+    >
+      {isLoading ? (
+        <span className="w-24 flex items-center justify-center">
+          <Loader className="animate-spin" />
+        </span>
+      ) : (
+        "Ativar assinatura"
+      )}
+    </Button>
+  );
 }

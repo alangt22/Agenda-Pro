@@ -12,7 +12,7 @@ export function LabelSubscription({ expired }: {expired: boolean}){
                     </h3>
                 ) : (
                     <h3 className="font-semibold">
-                        Você excedeu o linite do seu plano!
+                        Você excedeu o limite do seu plano!
                     </h3>
                 )}
 

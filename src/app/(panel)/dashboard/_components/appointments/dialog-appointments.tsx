@@ -42,12 +42,12 @@ export function DialogAppointments({appointment}: DialogAppointmentProps){
                         <div className='flex items-center'>
                             <FaWhatsapp className='text-green-600 w-5 h-5'/>
                             <p className='text-green-600 hover:text-green-200 px-1'>
-                                <a target='_blank' href={`https://wa.me/55${appointment.phone.replace(/\D/g, '')}?text=Olá,%20confirma%20seu%20agendamento%20para%20o%20dia%20${new Intl.DateTimeFormat ('pt-BR',{
+                                <a target='_blank' href={`https://wa.me/55${appointment.phone.replace(/\D/g, '')}?text=Olá,%20seu%20agendamento%20esta%20confirmado%20para%20o%20dia%20${new Intl.DateTimeFormat ('pt-BR',{
                             timeZone: "UTC",
                             year: "numeric",
                             month: "2-digit",
                             day: "2-digit"
-                         }).format(new Date(appointment.appointmentDate))}%20ás%20${appointment.time}%20horas%20?`}>
+                         }).format(new Date(appointment.appointmentDate))}%20ás%20${appointment.time}%20horas%20`}>
                                     Clique aqui para falar no Whatsapp
                                 </a>
                             </p>
