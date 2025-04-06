@@ -22,7 +22,7 @@ export function useAppoitmentForm(){
             email: "",
             phone: "",
             serviceId: "",
-            date: new Date(),
+            date: new Date((Date.UTC(year, month, day, 0,0,0,0)),
         }
     })
 }
