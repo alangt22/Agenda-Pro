@@ -1,3 +1,4 @@
+import { About } from "./_components/about";
 import { Footer } from "./_components/footer";
 import { Header } from "./_components/header";
 import { Hero } from "./_components/hero";
@@ -17,6 +18,8 @@ export default async function Home() {
       <div>
         <Hero/>
 
+        <About/>
+        
         <Professionals professionals={professionals || []}/>
 
         <Footer/>

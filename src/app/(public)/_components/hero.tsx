@@ -27,22 +27,29 @@ export function Hero() {
   }
 
   return (
-    <section className="bg-white">
-      <div className="container mx-auto px-4 pt-20 pb-4 sm:pb-0 sm:px-6 lg:px-8">
+    <section className="bg-white h-[500px]">
+      <div className="container mx-auto px-4 mt-28 pt-15 pb-4 sm:pb-0 sm:px-6 lg:px-8">
         <main className="flex items-center justify-center">
           <article className="flex-[2] max-w-3xl space-y-8 flex flex-col justify-center">
-            <h1 className="text-4xl lg:text-5xl font-bold max-w-2xl tracking-tight">
+            <h1
+              className="text-4xl lg:text-5xl font-bold max-w-2xl tracking-tight"
+              data-aos="fade-right"
+            >
               Encontre os melhores profissionais em um único local!
             </h1>
-            <p className="text-base md:text-lg text-gray-600">
-              Somos uma plataforma dedicada a profissionais da área estética,
-              barbearias e outros segmentos, com o objetivo de agilizar o
-              atendimento de forma simples, organizada e eficiente.
+            <p
+              className="text-base md:text-lg text-gray-600"
+              data-aos="fade-left"
+            >
+              Somos uma plataforma dedicada a diversos segmentos, com o objetivo
+              de agilizar o atendimento de forma simples, organizada e
+              eficiente.
             </p>
 
             <Button
               onClick={handleChange}
               className="bg-emerald-500 hover:bg-emerald-400 w-44 px-6 font-semibold"
+              data-aos="zoom-in"
             >
               {isLoading ? (
                 <span className="w-44 flex items-center justify-center">
@@ -91,6 +98,9 @@ export function Hero() {
               className="object-contain mb-4"
               quality={100}
               priority
+              data-aos="flip-left"
+              data-aos-easing="ease-out-cubic"
+              data-aos-duration="2000"
             />
           </div>
         </main>

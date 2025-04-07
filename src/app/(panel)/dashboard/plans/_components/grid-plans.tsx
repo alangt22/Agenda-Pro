@@ -42,7 +42,7 @@ export function GridPlans(){
                         </ul>
                         <div className='mt-4 ml-7'>
                             <p className='text-gray-600 line-through'>{plan.oldPrice}</p>
-                            <p className='text-black text-2xl font-bold'>{plan.price}</p>
+                            <p className='text-black text-2xl font-bold'>{plan.price}<span className='text-sm text-zinc-700'> / ao mes</span></p>
                         </div>
                     <CardContent>
                         <CardFooter className='mb-2'>

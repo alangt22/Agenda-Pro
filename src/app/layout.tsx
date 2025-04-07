@@ -4,6 +4,7 @@ import "./globals.css";
 import { SessionAuthProvider } from '@/components/session-auth'
 import {Toaster} from 'sonner'
 import {QueryClientContext} from '@/providers/queryclient'
+import { AosInit } from "./(public)/_components/aos-init";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,9 +45,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en"
+    className="overflow-x-hidden">
+      
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`overflow-x-hidden ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SessionAuthProvider>
           <QueryClientContext>
@@ -54,6 +57,7 @@ export default function RootLayout({
               duration={2500}
             />
             {children}
+            <AosInit/>
           </QueryClientContext>
         </SessionAuthProvider>
       </body>

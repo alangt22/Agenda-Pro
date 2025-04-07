@@ -314,6 +314,10 @@ export function ScheduleContent({ clinic }: ScheduleContentProps) {
                     <div className="border-zinc-200 border h-8 w-12 rounded-md bg-white mt-8"></div>
                     <span className="text-[12px] font-bold">Disponivel</span>
                     </div>
+                    <div>
+                    <div className="border-green-600 border h-8 w-12 rounded-md bg-white mt-8"></div>
+                    <span className="text-[12px] font-bold">Selecionado</span>
+                    </div>
                 </div>
                 <div className="bg-gray-100 p-4 rounded-lg mt-4">
                   {loadingSlots ? (
