@@ -131,7 +131,7 @@ export function ScheduleContent({ clinic }: ScheduleContentProps) {
       <div>
         <a
           target="_blank"
-          href={`https://wa.me/55${clinic?.phone?.replace(
+          href={`https://wa.me/55${formData.phone?.replace(
             /\D/g,
             ""
           )}?text=Olá!%0A%0ADesejo confirmar o meu agendamento.`}
