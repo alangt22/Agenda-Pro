@@ -28,7 +28,6 @@ export function DateTimePicker({className, minDate, initialDate, onChange}: Date
         <DatePicker
             className={className}
             selected={startDate}
-            locale="pt-BR"
             minDate={minDate ?? new Date()}
             onChange={handleChange}
             dateFormat="dd/MM/yyyy"

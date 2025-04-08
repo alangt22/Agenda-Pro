@@ -20,9 +20,12 @@ export async function GET(request: NextRequest) {
     try {
         // converter a date recebida em um objeto Date
         const [year, month, day] = dateParam.split("-").map(Number)
-        const startDate = new Date(Date.UTC(year, month - 1, day, 0, 0, 0))
-        const endDate = new Date(Date.UTC(year, month - 1, day,  23, 59, 59, 999))
-
+        const startDate = new Date(Date.UTC(year, month - 1, day - 1, 0, 0, 0, 0));  // Meia-noite do dia 8
+        const endDate = new Date(Date.UTC(year, month - 1, day - 1, 23, 59, 59, 999));  // Fim do dia 8
+        
+        console.log("Start Date (UTC):", startDate.toISOString())  // Data inicial no formato UTC
+        console.log("End Date (UTC):", endDate.toISOString())  
+        
 
         const user = await prisma.user.findFirst({
             where: {
