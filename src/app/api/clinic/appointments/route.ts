@@ -34,8 +34,8 @@ export const GET = auth(async function GET(request) {
         const startDate = new Date(Date.UTC(year, month -1, day, 0, 0, 0, 0))
         const endDate = new Date(Date.UTC(year, month -1, day, 23, 59, 59, 999))
 
-        console.log(startDate)
-        console.log(endDate)
+        console.log("page agendamento:", startDate)
+        console.log("page agendamento:", endDate)
 
         const appointments = await prisma.appoitments.findMany({
             where: {
