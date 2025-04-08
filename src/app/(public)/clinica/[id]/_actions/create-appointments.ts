@@ -26,22 +26,22 @@ export async function createNewAppointment(formData: FormSchema) {
     }
 
     try {
-        const selectedDate = new Date(formData.date);
-        selectedDate.setHours(0, 0, 0, 0); // Garantir que a hora será 00:00 para o dia
+        const selectedDate = new Date(formData.date)
+        const year = selectedDate.getFullYear()
+        const month = selectedDate.getMonth()
+        const day = selectedDate.getDate()
 
-        // Converte a data para o formato UTC
-        const appointmentDate = selectedDate.toISOString(); 
+        const appointmentDate = new Date(year, month, day, 0,0,0,0)
 
         console.log('DATA AGENDADA', appointmentDate)
 
-        // Aguarda a criação do novo agendamento
-        const newAppointment = await prisma.appoitments.create({
+        const newAppointment = prisma.appoitments.create({
             data: {
                 name: formData.name,
                 email: formData.email,
                 phone: formData.phone,
                 time: formData.time,
-                appointmentDate: appointmentDate, // Armazenando no formato UTC
+                appointmentDate: appointmentDate,
                 serviceId: formData.serviceId,
                 userId: formData.clinicId 
             }
