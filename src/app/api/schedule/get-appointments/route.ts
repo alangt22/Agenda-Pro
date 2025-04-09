@@ -16,26 +16,20 @@ export async function GET(request: NextRequest) {
 
     try {
         
-        const [year, month, day] = dateParam.split("-").map(Number);
-        const data = new Date(); 
-        const hora = data.toLocaleTimeString();
+        const [year, month, day] = dateParam.split("-").map(Number); 
+        
 
         let startDate, endDate;
 
-        
-        if (hora >= "21:00:00" && hora < "23:59:59") {
-            startDate = new Date(Date.UTC(year, month - 1, day - 1, 0, 0, 0, 0));  
-            endDate = new Date(Date.UTC(year, month - 1, day - 1, 23, 59, 59, 999));  
-        } else {
             startDate = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0)); 
             endDate = new Date(Date.UTC(year, month - 1, day, 23, 59, 59, 999));  
-        }
+        
 
-        console.log("Start Date (UTC):", startDate.toISOString()); 
-        console.log("End Date (UTC):", endDate.toISOString());  
+        console.log("Start Date (UTC):", startDate); 
+        console.log("End Date (UTC):", endDate);  
 
         
-        console.log("Hora atual:", hora); 
+    
 
         // Buscar o usuário
         const user = await prisma.user.findFirst({
