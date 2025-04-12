@@ -17,7 +17,7 @@ export function DateTimePicker({ className, minDate, initialDate, onChange }: Da
     // Função para zerar a hora
     function resetToMidnight(date: Date) {
         const newDate = new Date(date);
-        newDate.setHours(0, 0, 0, 0); // Zera hora, minutos, segundos e milissegundos
+        newDate.setHours(0, 0, 0, 0); 
         return newDate;
     }
 
@@ -25,8 +25,7 @@ export function DateTimePicker({ className, minDate, initialDate, onChange }: Da
 
     function handleChange(date: Date | null) {
         if (date) {
-            const resetDate = resetToMidnight(date); // Zera a data ao mudar
-            console.log(resetDate); // Para ver no log
+            const resetDate = resetToMidnight(date); 
             setStartDate(resetDate);
             onChange(resetDate);
         }

@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "AgendaPRO - Encontre os melhores profissionais em um único local!",
-  description: "Somos uma plataforma dedicada a profissionais da área estética, barbearias e outros segmentos, com o objetivo de agilizar o atendimento de forma simples, organizada e eficiente.",
+  description: "Somos uma plataforma dedicada a diversos segmentos, com o objetivo de agilizar o atendimento de forma simples, organizada e eficiente.",
   robots:{
     index: true,
     follow: true,
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   openGraph:{
     title: "AgendaPRO - Encontre os melhores profissionais em um único local!",
-    description: "Somos uma plataforma dedicada a profissionais da área estética, barbearias e outros segmentos, com o objetivo de agilizar o atendimento de forma simples, organizada e eficiente.",
+    description: "Somos uma plataforma dedicada a diversos segmentos, com o objetivo de agilizar o atendimento de forma simples, organizada e eficiente.",
     images: [`${process.env.NEXT_PUBLIC_URL}/logoAgendaPRO.png`],
     url: `${process.env.NEXT_PUBLIC_URL}`, 
     type: "website"
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image", 
     title: "AgendaPRO - Encontre os melhores profissionais em um único local!",
-    description: "Encontre profissionais de estética, barbearias e muito mais em AgendaPRO. Agilize o atendimento da sua clínica com nossa plataforma.",
+    description: "Somos uma plataforma dedicada a diversos segmentos, com o objetivo de agilizar o atendimento de forma simples, organizada e eficiente.",
     images: [`${process.env.NEXT_PUBLIC_URL}/logoAgendaPRO.png` ]
   },
 };

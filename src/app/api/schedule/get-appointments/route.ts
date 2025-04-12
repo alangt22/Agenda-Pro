@@ -21,14 +21,8 @@ export async function GET(request: NextRequest) {
 
         let startDate, endDate;
 
-            startDate = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0)); 
-            endDate = new Date(Date.UTC(year, month - 1, day, 23, 59, 59, 999));  
-        
-
-        console.log("Start Date (UTC):", startDate); 
-        console.log("End Date (UTC):", endDate);  
-
-        
+        startDate = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0)); 
+        endDate = new Date(Date.UTC(year, month - 1, day, 23, 59, 59, 999));  
     
 
         // Buscar o usuário
@@ -79,13 +73,9 @@ export async function GET(request: NextRequest) {
         }
 
         const blockedTimes = Array.from(blockedSlots);
-
-        console.log("Blocked times:", blockedTimes);
-
         return NextResponse.json(blockedTimes);
 
     } catch (error) {
-        console.log(error);
         return NextResponse.json({
             error: "Nenhum agendamento encontrado"
         }, {

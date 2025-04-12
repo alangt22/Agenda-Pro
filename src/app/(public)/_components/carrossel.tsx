@@ -11,10 +11,9 @@ import {
 } from "lucide-react";
 import Img1 from "../../../../public/agenda1.png";
 import Img2 from "../../../../public/agenda2.png";
-import Img3 from "../../../../public/agenda3.png";
 import Image from "next/image";
 
-const images = [Img1, Img2, Img3];
+const images = [Img1, Img2];
 
 export function Carrossel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({

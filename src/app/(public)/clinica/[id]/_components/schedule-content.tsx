@@ -75,7 +75,6 @@ export function ScheduleContent({ clinic }: ScheduleContentProps) {
 
         return json; // retorna um array com os horarios ja preenchidos do dia e da clinica especifica
       } catch (error) {
-        console.log(error);
         setLoadingSlots(false);
         return [];
       }
@@ -354,10 +353,12 @@ export function ScheduleContent({ clinic }: ScheduleContentProps) {
                 type="submit"
                 className=" w-full bg-emerald-500 hover:bg-emerald-400"
                 disabled={
-                  (isLoading && !watch("name")) ||
+                  (isLoading && 
+                  !watch("name")) ||
                   !watch("email") ||
                   !watch("phone") ||
-                  !watch("date")
+                  !watch("date")  ||
+                  !selectedTime
                 }
               >
                 {isLoading ? (
