@@ -11,6 +11,7 @@ const formSchema = z.object({
     serviceId: z.string().min(1, "O serviço é obrigatório"),
     time: z.string().min(1, "O horário é obrigatório"),
     clinicId: z.string().min(1, "O horário é obrigatório"),
+    name_professional: z.string().optional().nullable()
 })
 
 type FormSchema = z.infer<typeof formSchema>
@@ -33,7 +34,7 @@ export async function createNewAppointment(formData: FormSchema) {
 
         const appointmentDate = new Date(Date.UTC(year, month, day, 0,0,0,0))
 
-
+        let professional = formData.name_professional || ""
         const newAppointment = prisma.appoitments.create({
             data: {
                 name: formData.name,
@@ -42,7 +43,8 @@ export async function createNewAppointment(formData: FormSchema) {
                 time: formData.time,
                 appointmentDate: appointmentDate,
                 serviceId: formData.serviceId,
-                userId: formData.clinicId 
+                userId: formData.clinicId ,
+                name_professional: professional
             }
         })
 

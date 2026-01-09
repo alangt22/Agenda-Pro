@@ -6,6 +6,7 @@ import { useState } from "react";
 import { handleRegister } from "../_actions/login";
 import { FcGoogle } from "react-icons/fc";
 import { Loader } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 export function Hero() {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +28,7 @@ export function Hero() {
   }
 
   return (
-    <section className="bg-white h-[500px]">
+    <section className="bg-zinc-200 h-[500px]">
       <div className="container mx-auto px-4 mt-28 pt-15 pb-4 sm:pb-0 sm:px-6 lg:px-8">
         <main className="flex items-center justify-center">
           <article className="flex-[2] max-w-3xl space-y-8 flex flex-col justify-center">
@@ -61,32 +62,38 @@ export function Hero() {
             </Button>
           </article>
           {isLoginModalOpen && (
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
-              <div className="bg-white p-6 rounded-md text-center">
-                <h1 className="text-2xl font-bold mb-2">
-                  Odonto<span className="text-[#42ff7c]">PRO</span>
-                </h1>
-                <h3 className="text-lg font-semibold">
-                  Faça login ou Crie sua conta com Google
-                </h3>
-                <div className="mt-4">
+            <Dialog open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen}>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader className="space-y-3">
+                  <DialogTitle className="text-2xl font-bold text-center">
+                    Agenda<span className="text-[#42ff7c]">PRO</span>
+                  </DialogTitle>
+                  <DialogDescription className="text-center text-base">
+                    Faça login ou crie sua conta com Google
+                  </DialogDescription>
+                </DialogHeader>
+
+                <div className="space-y-4 pt-4">
                   <Button
                     onClick={() => handleLogin("google")}
-                    className="w-full mb-4"
+                    variant="outline"
+                    size="lg"
+                    className="w-full h-12 gap- bg-zinc-300 border-2 hover:bg-accent"
                   >
-                    Login com Google
-                    <FcGoogle className="mr-2 w-5 h-5" />
+                    <FcGoogle className="w-5 h-5" />
+                    Continuar com Google
+                  </Button>
+
+                  <Button
+                    onClick={() => setIsLoginModalOpen(false)}
+                    variant="ghost"
+                    className="w-full bg-zinc-300"
+                  >
+                    Cancelar
                   </Button>
                 </div>
-                <Button
-                  onClick={() => setIsLoginModalOpen(false)}
-                  variant="outline"
-                  className="w-full mt-4"
-                >
-                  Cancelar
-                </Button>
-              </div>
-            </div>
+              </DialogContent>
+            </Dialog>
           )}
 
           <div className="hidden lg:block">

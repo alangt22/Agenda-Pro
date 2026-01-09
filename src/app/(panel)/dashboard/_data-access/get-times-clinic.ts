@@ -18,27 +18,31 @@ export async function getTimesClinic({userId}: {userId: string}) {
             },
             select:{
                 id: true,
-                times: true
+                times: true,
+                name_professional: true
             }
         })
 
         if(!user){
             return {
                 times: [],
-                userId: ""
+                userId: "",
+                name_professional: ""
             }
         }
 
         return {
             times: user.times,
-            userId: user.id
+            userId: user.id,
+            name_professional: user.name_professional
         }
         
     } catch (error) {
         console.log(error)
         return{
             times: [],
-            userId: ""
+            userId: "",
+            name_professional: ""
         }
     }
 }

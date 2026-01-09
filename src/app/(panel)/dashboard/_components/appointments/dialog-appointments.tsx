@@ -1,67 +1,125 @@
-import {
-    DialogContent,
-    DialogHeader,
-    DialogDescription,
-    DialogTitle
-} from '@/components/ui/dialog'
-import {AppointmentWithService} from './appointments-list'
-import { format } from 'date-fns'
-import {formatCurrency} from '@/utils/formatCurrency'
-import { FaWhatsapp } from 'react-icons/fa'
+import { DialogContent, DialogHeader, DialogDescription, DialogTitle } from "@/components/ui/dialog"
+import type { AppointmentWithService } from "./appointments-list"
+import { FaWhatsapp } from "react-icons/fa"
+import { formatCurrency } from "@/utils/formatCurrency"
+import { Calendar, Clock, User, Phone, Mail,  DollarSign, UserCheck, Sparkles } from "lucide-react"
 
-interface DialogAppointmentProps{
-    appointment: AppointmentWithService | null
+interface DialogAppointmentProps {
+  appointment: AppointmentWithService | null
 }
 
-export function DialogAppointments({appointment}: DialogAppointmentProps){
-    return(
-        <DialogContent>
-            <DialogHeader>
-                <DialogTitle>
-                    Detalhes do agendamento
-                </DialogTitle>
-                <DialogDescription>
-                    Veja todos detalhes do agendamento
-                </DialogDescription>
-            </DialogHeader>
+export function DialogAppointments({ appointment }: DialogAppointmentProps) {
+  return (
+    <DialogContent className="max-w-md max-h-[85vh] overflow-y-auto overflow-x-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
 
-            <div className='py-4'>
-                {appointment && (
-                    <article>
-                        <p><span className='font-semibold'>Horario agendado:</span> {appointment.time}</p>
-                        <p className='mb-2'><span className='font-semibold'>
-                            Data do agendamento:</span> {new Intl.DateTimeFormat ('pt-BR',{
-                            timeZone: "UTC",
-                            year: "numeric",
-                            month: "2-digit",
-                            day: "2-digit"
-                         }).format(new Date(appointment.appointmentDate))}
-                        </p>
-                        <p><span className='font-semibold'>Nome:</span> {appointment.name}</p>
-                        <p><span className='font-semibold'>Telefone:</span> {appointment.phone}</p>
-                        <div className='flex items-center'>
-                            <FaWhatsapp className='text-green-600 w-5 h-5'/>
-                            <p className='text-green-600 hover:text-green-200 px-1'>
-                                <a target='_blank' href={`https://wa.me/55${appointment.phone.replace(/\D/g, '')}?text=Olá,%20seu%20agendamento%20esta%20confirmado%20para%20o%20dia%20${new Intl.DateTimeFormat ('pt-BR',{
-                            timeZone: "UTC",
-                            year: "numeric",
-                            month: "2-digit",
-                            day: "2-digit"
-                         }).format(new Date(appointment.appointmentDate))}%20ás%20${appointment.time}%20horas%20`}>
-                                    Clique aqui para falar no Whatsapp
-                                </a>
-                            </p>
-                        </div>
-                        <p><span className='font-semibold'>Email:</span> {appointment.email}</p>
+      <DialogHeader>
+        <DialogTitle>Detalhes do Agendamento</DialogTitle>
+        <DialogDescription>Informações sobre o agendamento</DialogDescription>
+      </DialogHeader>
 
-                        <section className='bg-gray-100 mt-4 p-2 rounded-md'>
-                            <p><span className='font-semibold'>Serviço:</span> {appointment.service.name}</p>
-                            <p><span className='font-semibold'>Serviço:</span> {formatCurrency((appointment.service.price / 100))}</p>
-                        </section>
-                    </article>
-                )}
+      {appointment && (
+        <div className="space-y-4 py-4">
+          {/* Data e Hora */}
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-primary" />
+              <div className="flex-1">
+                <p className="text-xs text-muted-foreground">Data</p>
+                <p className="font-medium text-sm">
+                  {new Intl.DateTimeFormat("pt-BR", {
+                    timeZone: "UTC",
+                    year: "numeric",
+                    month: "long",
+                    day: "2-digit",
+                  }).format(new Date(appointment.appointmentDate))}
+                </p>
+              </div>
             </div>
-        </DialogContent>
-    )
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4 text-primary" />
+              <div className="flex-1">
+                <p className="text-xs text-muted-foreground">Horário</p>
+                <p className="font-medium text-sm">{appointment.time}</p>
+              </div>
+            </div>
+          </div>
 
+          <div className="border-t pt-4 space-y-2">
+            <h4 className="text-sm font-semibold text-muted-foreground">Cliente</h4>
+            <div className="flex items-center gap-2">
+              <User className="w-4 h-4 text-primary" />
+              <div className="flex-1">
+                <p className="text-xs text-muted-foreground">Nome</p>
+                <p className="font-medium text-sm">{appointment.name}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Phone className="w-4 h-4 text-primary" />
+              <div className="flex-1">
+                <p className="text-xs text-muted-foreground">Telefone</p>
+                <p className="font-medium text-sm">{appointment.phone}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Mail className="w-4 h-4 text-primary" />
+              <div className="flex-1">
+                <p className="text-xs text-muted-foreground">Email</p>
+                <p className="font-medium text-sm break-all">{appointment.email}</p>
+              </div>
+            </div>
+
+            {/* WhatsApp - versão compacta */}
+            <a
+              target="_blank"
+              href={`https://wa.me/55${appointment.phone.replace(/\D/g, "")}?text=Olá,%20seu%20agendamento%20esta%20confirmado%20para%20o%20dia%20${new Intl.DateTimeFormat(
+                "pt-BR",
+                {
+                  timeZone: "UTC",
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                },
+              ).format(
+                new Date(appointment.appointmentDate),
+              )}%20ás%20${appointment.time}%20horas%20para%20o%20serviço%20${appointment.service.name}.%20profissional: ${appointment.name_professional}`}
+              className="flex items-center justify-center gap-2 text-green-600 hover:text-green-700 transition-colors w-full p-2 rounded-md bg-green-50 hover:bg-green-100 text-sm"
+              rel="noreferrer"
+            >
+              <FaWhatsapp className="w-4 h-4" />
+              <span className="font-medium">Enviar WhatsApp</span>
+            </a>
+          </div>
+
+          <div className="border-t pt-4 space-y-2">
+            <h4 className="text-sm font-semibold text-muted-foreground">Serviço</h4>
+            <div className="flex items-center gap-2">
+              <Sparkles  className="w-4 h-4 text-primary" />
+              <div className="flex-1">
+                <p className="text-xs text-muted-foreground">Serviço</p>
+                <p className="font-medium text-sm">{appointment.service.name}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <DollarSign className="w-4 h-4 text-primary" />
+              <div className="flex-1">
+                <p className="text-xs text-muted-foreground">Valor</p>
+                <p className="font-medium text-green-600">{formatCurrency(appointment.service.price / 100)}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <UserCheck className="w-4 h-4 text-primary" />
+              <div className="flex-1">
+                <p className="text-xs text-muted-foreground">Profissional</p>
+                <p className="font-medium text-sm">{appointment.name_professional}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </DialogContent>
+  )
 }

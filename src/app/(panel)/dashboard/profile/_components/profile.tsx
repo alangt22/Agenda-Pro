@@ -30,7 +30,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Loader } from "lucide-react";
+import { ArrowRight, Calendar, Loader } from "lucide-react";
 
 import imgTest from "../../../../../../public/foto1.png";
 import { cn } from "@/lib/utils";
@@ -41,6 +41,8 @@ import { formatPhone } from "@/utils/formatPhone";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { AvatarProfile } from "./profile-avatar";
+import { DaysSelector } from "./day-selector";
+import { BlockedDatesSelector } from "./blocked-dates-selector";
 
 type UserWithSubscription = Prisma.UserGetPayload<{
   include: {
@@ -58,6 +60,14 @@ export function ProfileContent({ user }: ProfileContentProps) {
     user.times ?? []
   );
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
+  const [selectedDays, setSelectedDays] = useState<string[]>(
+    user.workingDays ?? []
+  );
+  const [blockedDates, setBlockedDates] = useState<string[]>(
+    (user.blockedDates ?? []).map((d) => {
+      return d.toISOString().slice(0, 10);
+    })
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [isLogoutLoading, setIsLogoutLoading] = useState(false);
 
@@ -69,6 +79,8 @@ export function ProfileContent({ user }: ProfileContentProps) {
     phone: user.phone,
     status: user.status,
     timeZone: user.timeZone,
+    name_professional: user.name_professional || "",
+    workingDays: user.workingDays,
   });
 
   function generateTimesSlots(): string[] {
@@ -105,6 +117,11 @@ export function ProfileContent({ user }: ProfileContentProps) {
       zone.startsWith("America/Boa_Vista")
   );
 
+  const handleDaysChange = (days: string[]) => {
+    setSelectedDays(days);
+    form.setValue("workingDays", days);
+  };
+
   async function onSubmit(values: ProfileFormData) {
     setIsLoading(true);
 
@@ -115,6 +132,9 @@ export function ProfileContent({ user }: ProfileContentProps) {
       status: values.status === "active" ? true : false,
       timeZone: values.timeZone,
       times: selectedHours || [],
+      name_professional: values.name_professional || "",
+      workingDays: selectedDays,
+      blockedDates,
     });
 
     if (response.error) {
@@ -154,11 +174,33 @@ export function ProfileContent({ user }: ProfileContentProps) {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-semibold">Nome</FormLabel>
+                      <FormLabel className="font-semibold">
+                        Nome da clinica
+                      </FormLabel>
                       <FormControl>
                         <Input
                           {...field}
                           placeholder="Digite o nome da clinica..."
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="name_professional"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-medium text-muted-foreground">
+                        Nome do profissional
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="Digite o nome do profissional..."
+                          className="h-11"
                         />
                       </FormControl>
                       <FormMessage />
@@ -285,6 +327,28 @@ export function ProfileContent({ user }: ProfileContentProps) {
                       </Button>
                     </DialogContent>
                   </Dialog>
+                </div>
+
+                {/* Dias de Funcionamento */}
+                <div className="space-y-3">
+                  <Label className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                    <Calendar className="w-4 h-4" />
+                    Dias de Funcionamento
+                  </Label>
+                  <div className="rounded-lg border bg-card p-5">
+                    <DaysSelector
+                      selectedDays={selectedDays}
+                      onChange={handleDaysChange}
+                    />
+                  </div>
+                </div>
+
+                {/* Datas Bloqueadas */}
+                <div className="space-y-3">
+                  <BlockedDatesSelector
+                    initialDates={blockedDates}
+                    onChange={setBlockedDates}
+                  />
                 </div>
 
                 <FormField

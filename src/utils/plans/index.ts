@@ -24,7 +24,7 @@ export const subscriptionPlans = [
         name: "Basic",
         description: "Perfeito para empresas menores",
         oldPrice: "R$ 97,90",
-        price: "R$ 27,90",
+        price: "R$ 47,90",
         features: [
             ` Até ${PLANS["BASIC"].maxServices} Serviços`,
             'Agendamentos ilimitados',
@@ -37,7 +37,7 @@ export const subscriptionPlans = [
         name: "Profissional",
         description: "Ideal para empresas grandes",
         oldPrice: "R$ 197,90",
-        price: "R$ 97,90",
+        price: "R$ 79,99",
         features: [
             ` Até ${PLANS["PROFESSIONAL"].maxServices} Serviços`,
             'Agendamentos ilimitados',

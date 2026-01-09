@@ -22,7 +22,7 @@ export function AvatarProfile({avatarUrl, userId}: AvatarProfileProps) {
             setLoading(true);
             const image = e.target.files[0];
             
-            if(image.type !== "image/jpeg" && image.type !== "image/png") {
+            if(image.type !== "image/jpeg" && image.type !== "image/png" && image.type !== "image/jpg" && image.type !== "image/webp"  && image.type !== "image/avif"){ 
                 toast.error("Formato de imagem inválido")
                 return;
             }

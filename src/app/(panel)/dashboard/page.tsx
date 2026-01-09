@@ -11,6 +11,16 @@ import { checkSubscription } from '@/utils/permissions/checkSubscription'
 import { LabelSubscription } from '@/components/ui/label-subscription'
 
 import { Loader } from "lucide-react";
+import { Metadata } from 'next'
+export const metadata: Metadata = {
+  title: "Painel de Controle | AgendaPRO",
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+  },
+};
+
 
 export default async function Dashboard() {
     const session = await getSession()

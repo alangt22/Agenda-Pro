@@ -19,6 +19,24 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "AgendaPRO - Encontre os melhores profissionais em um único local!",
   description: "Somos uma plataforma dedicada a diversos segmentos, com o objetivo de agilizar o atendimento de forma simples, organizada e eficiente.",
+  keywords:[
+  "agendamento online",
+  "gestão de negócios",
+  "SaaS para serviços",
+  "plataforma de agendamento",
+  "sistema de gestão",
+  "software para empresas de serviços",
+  "agenda online",
+  "gestão de clientes",
+  "plataforma de profissionais",
+  "sistema de reservas"
+],
+    authors: [
+    { name: "AgendaPRO" },
+  ],
+  creator: "AgendaPRO",
+  publisher: "AgendaPRO",
+  applicationName: "AgendaPRO",
   robots:{
     index: true,
     follow: true,

@@ -1,43 +1,169 @@
-"use client"
-import { useState } from "react"
-import DatePicker, { registerLocale } from 'react-datepicker'
-import { ptBR } from 'date-fns/locale/pt-BR'
-import 'react-datepicker/dist/react-datepicker.css'
 
-registerLocale("pt-BR", ptBR)
+"use client";
+import { useEffect, useState } from "react";
+import DatePicker, { registerLocale } from "react-datepicker";
+import { ptBR } from "date-fns/locale/pt-BR";
+import "react-datepicker/dist/react-datepicker.css";
+
+registerLocale("pt-BR", ptBR);
 
 interface DateTimePickerProps {
-    minDate?: Date;
-    className?: string;
-    initialDate?: Date;
-    onChange: (date: Date) => void;
+  className?: string;
+  initialDate?: Date;
+  onChange: (date: Date) => void;
+  allowedDays?: number[];  
+  blockedDates?: (string | Date)[];
 }
 
-export function DateTimePicker({ className, minDate, initialDate, onChange }: DateTimePickerProps) {
-    // Função para zerar a hora
-    function resetToMidnight(date: Date) {
-        const newDate = new Date(date);
-        newDate.setHours(0, 0, 0, 0); 
-        return newDate;
+export function DateTimePicker({
+  className,
+  initialDate,
+  onChange,  
+  allowedDays,
+  blockedDates,
+}: DateTimePickerProps) {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  // permitido: mês atual + mês seguinte
+  const maxDate = new Date(now.getFullYear(), now.getMonth() + 2, 0);
+
+  function reset(d: Date) {
+    const x = new Date(d);
+    x.setHours(0, 0, 0, 0);
+    return x;
+  }
+
+  const [startDate, setStartDate] = useState(
+    initialDate ? reset(initialDate) : reset(today)
+  );
+  function toYMDLocal(input: string | Date) {
+    if (typeof input === "string") {
+      // caso venha "2025-11-29T03:00:00.000Z" ou "2025-11-29T00:00:00.000Z"
+      if (input.includes("T")) {
+        return input.slice(0, 10); // pega YYYY-MM-DD direto, evita timezone shift
+      }
+      // caso já seja "YYYY-MM-DD"
+      if (/^\d{4}-\d{2}-\d{2}$/.test(input)) {
+        return input;
+      }
+      // fallback: tenta criar Date (menos provável)
+      const d = new Date(input);
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(
+        2,
+        "0"
+      )}-${String(d.getDate()).padStart(2, "0")}`;
+    } else {
+      // se já é Date, usa getters locais
+      return `${input.getFullYear()}-${String(input.getMonth() + 1).padStart(
+        2,
+        "0"
+      )}-${String(input.getDate()).padStart(2, "0")}`;
+    }
+  }
+
+  const [normalizedBlocked, setNormalizedBlocked] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!blockedDates) {
+      setNormalizedBlocked([]);
+
+      return;
+    }
+    const normalized = blockedDates.map((b) => toYMDLocal(b));
+    setNormalizedBlocked(normalized);
+  }, [blockedDates]);
+
+  // cria set para lookup rápido
+  const blockedSet = new Set(normalizedBlocked);
+
+  function handleChange(date: Date | null) {
+    if (!date) return;
+
+    const d = reset(date);
+
+    if (d < today || d > maxDate) return;
+    if (allowedDays && !allowedDays.includes(d.getDay())) return;
+
+    setStartDate(d);
+    onChange(d);
+  }
+  
+
+  return (
+    <>
+      <DatePicker
+        className={className}
+        locale="pt-BR"
+        selected={startDate}
+        onChange={handleChange}
+        dateFormat="dd/MM/yyyy"
+        minDate={today}
+        maxDate={maxDate}
+        dayClassName={(date) => (blockedSet.has(toYMDLocal(date)) ? "blocked-day" : "")}
+        filterDate={(date) => {
+          const d = reset(date);
+          if (blockedSet.has(toYMDLocal(date))) return false;
+          if (d < today || d > maxDate) return false;
+
+          if (!allowedDays) return true;
+
+          return allowedDays.includes(d.getDay());
+        }}
+        renderCustomHeader={({ date, decreaseMonth, increaseMonth }) => {
+          const month = date.toLocaleString("pt-BR", { month: "long" });
+          const year = date.getFullYear();
+
+          const isAtMin =
+            date.getMonth() === today.getMonth() &&
+            date.getFullYear() === today.getFullYear();
+
+          const isAtMax =
+            date.getMonth() === maxDate.getMonth() &&
+            date.getFullYear() === maxDate.getFullYear();
+
+          return (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                padding: 8,
+                alignItems: "center",
+              }}
+            >
+              <button onClick={decreaseMonth} disabled={isAtMin}>
+                {"<"}
+              </button>
+
+              <div style={{ fontWeight: 600, textTransform: "capitalize" }}>
+                {month} {year}
+              </div>
+
+              <button onClick={increaseMonth} disabled={isAtMax}>
+                {">"}
+              </button>
+            </div>
+          );
+        }}
+      />
+
+      <style>{`
+    /* ESCONDE DIAS FORA DO MÊS SELECIONADO */
+    .react-datepicker__day--outside-month {
+      visibility: hidden !important;
     }
 
-    const [startDate, setStartDate] = useState(initialDate ? resetToMidnight(initialDate) : resetToMidnight(new Date()));
-
-    function handleChange(date: Date | null) {
-        if (date) {
-            const resetDate = resetToMidnight(date); 
-            setStartDate(resetDate);
-            onChange(resetDate);
-        }
+    .react-datepicker-wrapper input {
+      background-color: #1f1f1f !important;
+      color: white !important;
+      border: 1px solid #3a3a3a !important;
     }
 
-    return (
-        <DatePicker
-            className={className}
-            selected={startDate}
-            minDate={minDate ? resetToMidnight(minDate) : resetToMidnight(new Date())} // Zera o minDate também
-            onChange={handleChange}
-            dateFormat="dd/MM/yyyy"
-        />
-    );
+    .react-datepicker { background-color: #1f1f1f !important; border: 1px solid #3a3a3a !important; color: white !important; }
+    .react-datepicker__header { background-color: #1f1f1f !important; border-bottom: 1px solid #3a3a3a !important; }
+    .react-datepicker__day, .react-datepicker__day-name, .react-datepicker__current-month { color: white !important; }
+    .react-datepicker__day--disabled { color: #777 !important; background-color: #2a2a2a !important; cursor: not-allowed; }
+    .react-datepicker__day:not(.react-datepicker__day--disabled):hover { background-color: #333 !important; border-radius: 50%; }
+  `}</style>
+    </>
+  );
 }

@@ -1,34 +1,37 @@
-import getSession from '@/lib/getSession'
-import { redirect } from "next/navigation"
-import { GridPlans } from "./_components/grid-plans"
-import { getSubscription } from '@/utils/get-subscription'
-import { SubscriptionDetail } from './_components/subscription-detail'
+import getSession from "@/lib/getSession";
+import { redirect } from "next/navigation";
+import { GridPlans } from "./_components/grid-plans";
+import { getSubscription } from "@/utils/get-subscription";
+import { SubscriptionDetail } from "./_components/subscription-detail";
 
+import { Metadata } from "next";
 
-
-
+export const metadata: Metadata = {
+  title: "Planos | AgendaPRO",
+  description: "Planos - AgendaPRO",
+  robots:{
+    index: false,
+    follow: false,
+    nocache: true
+  },
+};
 
 export default async function Plans() {
-    const session = await getSession()
+  const session = await getSession();
 
-    if(!session) {
-        redirect('/')
-    }
+  if (!session) {
+    redirect("/");
+  }
 
+  const subscription = await getSubscription({ userId: session?.user?.id! });
 
-    const subscription = await getSubscription({userId: session?.user?.id!})
+  return (
+    <div>
+      {subscription?.status !== "active" && <GridPlans />}
 
-
-
-    return(
-            <div>
-                {subscription?.status !== "active" && (
-                    <GridPlans/>
-                )}
-
-                {subscription?.status === "active" && (
-                    <SubscriptionDetail subscription={subscription!}/>
-                )}
-            </div>
-    )
+      {subscription?.status === "active" && (
+        <SubscriptionDetail subscription={subscription!} />
+      )}
+    </div>
+  );
 }
