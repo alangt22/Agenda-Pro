@@ -20,7 +20,7 @@ model Appoitments {
   phone       String
   appointmentDate DateTime
   time        String
-
+  name_professional String
 
   serviceId   String
   service     Services @relation(fields: [serviceId], references: [id])
@@ -90,6 +90,10 @@ model User {
   timeZone            String?      
   stripe_customer_id  String?
   times               String[] @default([])
+
+  name_professional   String?
+  workingDays         String[]            @default(["monday", "tuesday", "wednesday", "thursday", "friday", "saturday"])
+  blockedDates        DateTime[]          @default([])
 
   subscription        Subscription?
   services            Services[]
