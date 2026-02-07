@@ -29,7 +29,7 @@ export function Hero() {
 
   return (
     <section className="bg-zinc-200 h-[500px]">
-      <div className="container mx-auto px-4 mt-28 pt-15 pb-4 sm:pb-0 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 mt-16 pt-15 pb-4 sm:pb-0 sm:px-6 lg:px-8">
         <main className="flex items-center justify-center">
           <article className="flex-[2] max-w-3xl space-y-8 flex flex-col justify-center">
             <h1
