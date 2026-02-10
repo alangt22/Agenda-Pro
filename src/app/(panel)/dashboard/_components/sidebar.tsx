@@ -19,17 +19,19 @@ import {
   ChevronRight,
   Folder,
   List,
+  LogOut,
   Settings,
 } from "lucide-react";
 import Link from "next/link";
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
 import { Footer } from "@/app/(public)/_components/footer";
+import { signOut } from "next-auth/react";
 
 export function SidebarDashboard({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [isCollapsed, setIsColapsed] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
 
   useEffect(() => {
@@ -50,6 +52,11 @@ export function SidebarDashboard({ children }: { children: React.ReactNode }) {
       setIsOpen(false);
     }
   }, [isLargeScreen]);
+
+  async function handleLogout() {
+    setLoading(true);
+    await signOut();
+  }
 
   return (
     <div className="flex min-h-screen w-full">
@@ -174,6 +181,14 @@ export function SidebarDashboard({ children }: { children: React.ReactNode }) {
                 isColapsed={isCollapsed}
                 icon={<Banknote className="w-6 h-6" />}
               />
+              <button
+                onClick={handleLogout}
+                disabled={loading}
+                className="text-zinc-500 hover:text-red-600 flex items-center gap-2 mt-4 justify-center cursor-pointer"
+              >
+                <LogOut className="w-6 h-6" />
+                {loading ? "Saindo..." : "Sair"}
+              </button>
             </nav>
           </CollapsibleContent>
         </Collapsible>
@@ -263,13 +278,22 @@ export function SidebarDashboard({ children }: { children: React.ReactNode }) {
                     icon={<Banknote className="w-6 h-6" />}
                   />
                 </button>
+
+                <button
+                  onClick={handleLogout}
+                  disabled={loading}
+                  className="text-zinc-500 hover:text-red-600 flex items-center gap-2 mt-4 justify-center cursor-pointer"
+                >
+                  <LogOut className="w-6 h-6" />
+                  {loading ? "Saindo..." : "Sair"}
+                </button>
               </nav>
             </SheetContent>
           </Sheet>
         </header>
 
         <main className="flex-1 py-4 px-2 md:p-6">{children}</main>
-        <Footer/>
+        <Footer />
       </div>
     </div>
   );
