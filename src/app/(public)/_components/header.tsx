@@ -22,6 +22,14 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
+  // mover a page ate profissionais clicando no link
+  const handleScroll = () => {
+    const element = document.getElementById("profissionals");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const navItens = [{ href: "/", label: "Profissionais" }];
 
   async function handleLogin(provider: "google") {
@@ -38,14 +46,14 @@ export function Header() {
     <>
       {navItens.map((item) => (
         <Button
-          onClick={() => setIsOpen(false)}
           key={item.href}
-          asChild
-          className="text-black hover:text-green-500 shadow-none bg-transparent hover:bg-transparent"
+          onClick={() => {
+            setIsOpen(false);
+            handleScroll();
+          }}
+          className="text-base text-black hover:text-green-500 bg-transparent hover:bg-transparent shadow-none"
         >
-          <Link href={item.href} className="text-base">
-            {item.label}
-          </Link>
+          Profissionais
         </Button>
       ))}
 

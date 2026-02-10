@@ -19,7 +19,7 @@ interface ProfessionalProps {
 
 export function Professionals({ professionals }: ProfessionalProps) {
   return (
-    <section className="py-24 bg-zinc-200 dark:bg-gradient-to-br from-muted/30 to-background">
+    <section id="profissionals" className="py-24 bg-zinc-200 dark:bg-gradient-to-br from-muted/30 to-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <h2 className="text-4xl lg:text-5xl font-bold tracking-tight">
