@@ -13,6 +13,7 @@ import {
 import { subscriptionPlans } from "@/utils/plans/index";
 import { Button } from "@/components/ui/button";
 import { createPortalCustomer } from "../_actions/create-portal-customer";
+import { useState } from "react";
 
 interface SubscriptionDetailProps{
     subscription: Subscription
@@ -20,9 +21,12 @@ interface SubscriptionDetailProps{
 
 export function SubscriptionDetail({subscription}: SubscriptionDetailProps) {
 
+    const [loading, setLoading] = useState(false)
+
     const subscriptionInfo = subscriptionPlans.find( plan => plan.id === subscription.plan)
 
     async function handleManageSubscription() {
+        setLoading(true)
         const portal = await createPortalCustomer()
 
         if(portal.error){
@@ -63,8 +67,9 @@ export function SubscriptionDetail({subscription}: SubscriptionDetailProps) {
             <CardFooter>
                 <Button 
                     onClick={handleManageSubscription}
+                    disabled={loading}
                 >
-                    Gerenciar assinatura
+                    {loading ? "Carregando..." : "Gerenciar assinatura"}
                 </Button>
             </CardFooter>
         </Card>

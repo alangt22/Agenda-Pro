@@ -78,7 +78,7 @@ export function About() {
               </h2>
 
               <p className="text-lg text-muted-foreground leading-relaxed">
-                ALNBarber é uma plataforma digital projetada para otimizar a gestão de compromissos e atendimentos. Com
+                A AgendaPRO é uma plataforma digital projetada para otimizar a gestão de compromissos e atendimentos. Com
                 uma interface intuitiva e ferramentas avançadas, permite agendar, organizar e gerenciar horários de
                 maneira prática e eficiente.
               </p>

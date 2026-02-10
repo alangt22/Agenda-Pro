@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible";
+import { Footer } from "@/app/(public)/_components/footer";
 
 export function SidebarDashboard({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -268,6 +269,7 @@ export function SidebarDashboard({ children }: { children: React.ReactNode }) {
         </header>
 
         <main className="flex-1 py-4 px-2 md:p-6">{children}</main>
+        <Footer/>
       </div>
     </div>
   );

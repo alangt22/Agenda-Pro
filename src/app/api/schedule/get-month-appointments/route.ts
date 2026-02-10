@@ -1,61 +1,66 @@
 import prisma from "@/lib/prisma";
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-    const { searchParams } = request.nextUrl;
-    const userId = searchParams.get('userId');
-    const dateParam = searchParams.get('date');
+  const { searchParams } = request.nextUrl;
+  const userId = searchParams.get("userId");
+  const dateParam = searchParams.get("date");
 
-    if (!userId || userId === "null" || !dateParam || dateParam === "null") {
-        return NextResponse.json({
-            error: "Nenhum agendamento encontrado"
-        }, {
-            status: 400
-        });
+  if (!userId || userId === "null" || !dateParam || dateParam === "null") {
+    return NextResponse.json(
+      {
+        error: "Nenhum agendamento encontrado",
+      },
+      {
+        status: 400,
+      },
+    );
+  }
+
+  try {
+    const [year, month] = dateParam.split("-").map(Number);
+
+    let startDate, endDate;
+
+    startDate = new Date(Date.UTC(year, month - 1));
+    endDate = new Date(Date.UTC(year, month));
+
+    // Buscar o usuário
+    const user = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          error: "Nenhum agendamento encontrado",
+        },
+        {
+          status: 400,
+        },
+      );
     }
 
-    try {
-        
-        const [year, month] = dateParam.split("-").map(Number); 
-        
+    // Buscar os agendamentos
+    const appointments = await prisma.appoitments.findMany({
+      where: {
+        userId: userId,
+        appointmentDate: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+      orderBy: {
+        appointmentDate: "asc",
+      },
+      include: {
+        service: true,
+      },
+    });
 
-        let startDate, endDate;
-
-
-        startDate = new Date(Date.UTC(year, month - 1)); 
-        endDate = new Date(Date.UTC(year, month));  
-    
-
-        // Buscar o usuário
-        const user = await prisma.user.findFirst({
-            where: {
-                id: userId
-            }
-        });
-
-        if (!user) {
-            return NextResponse.json({
-                error: "Nenhum agendamento encontrado"
-            }, {
-                status: 400
-            });
-        }
-
-        // Buscar os agendamentos
-        const appointments = await prisma.appoitments.findMany({
-            where: {
-                userId: userId,
-                appointmentDate: {
-                    gte: startDate,
-                    lte: endDate,
-                }
-            },
-            include: {
-                service: true
-            }
-        });
-
-/*         // Criar um Set para armazenar os slots bloqueados
+    /*         // Criar um Set para armazenar os slots bloqueados
         const blockedSlots = new Set<string>();
 
         for (const apt of appointments) {
@@ -75,14 +80,14 @@ export async function GET(request: NextRequest) {
 
         const blockedTimes = Array.from(blockedSlots);
         return NextResponse.json(blockedTimes); */
-
-    } catch (error) {
-        return NextResponse.json({
-            error: "Nenhum agendamento encontrado"
-        }, {
-            status: 400
-        });
-    }
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error: "Nenhum agendamento encontrado",
+      },
+      {
+        status: 400,
+      },
+    );
+  }
 }
-
-

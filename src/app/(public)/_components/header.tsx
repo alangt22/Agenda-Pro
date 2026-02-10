@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
   Sheet,
   SheetContent,
@@ -127,32 +128,38 @@ export function Header() {
       </div>
 
       {isLoginModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-md text-center">
-            <h1 className="text-2xl font-bold mb-2">
-              Agenda<span className="text-emerald-500">PRO</span>
-            </h1>
-            <h3 className="text-lg font-semibold">
-              Faça login ou Crie sua conta com Google
-            </h3>
-            <div className="mt-4">
+        <Dialog open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader className="space-y-3">
+              <DialogTitle className="text-2xl font-bold text-center">
+                Agenda<span className="text-[#42ff7c]">PRO</span>
+              </DialogTitle>
+              <DialogDescription className="text-center text-base">
+                Faça login ou crie sua conta com Google
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-4 pt-4">
               <Button
                 onClick={() => handleLogin("google")}
-                className="w-full mb-4"
+                variant="outline"
+                size="lg"
+                className="w-full h-12 gap- bg-zinc-300 border-2 hover:bg-accent"
               >
-                Login com Google
-                <FcGoogle className="mr-2 w-5 h-5" />
+                <FcGoogle className="w-5 h-5" />
+                Continuar com Google
+              </Button>
+
+              <Button
+                onClick={() => setIsLoginModalOpen(false)}
+                variant="ghost"
+                className="w-full bg-zinc-300"
+              >
+                Cancelar
               </Button>
             </div>
-            <Button
-              onClick={() => setIsLoginModalOpen(false)}
-              variant="outline"
-              className="w-full mt-4"
-            >
-              Cancelar
-            </Button>
-          </div>
-        </div>
+          </DialogContent>
+        </Dialog>
       )}
     </header>
   );

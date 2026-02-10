@@ -65,7 +65,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="overflow-x-hidden">
+    <html lang="pt-BR" className="overflow-x-hidden">
       <body
         className={`overflow-x-hidden ${geistSans.variable} ${geistMono.variable} antialiased`}
       >

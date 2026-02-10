@@ -130,7 +130,7 @@ export function DateTimePicker({
                 alignItems: "center",
               }}
             >
-              <button onClick={decreaseMonth} disabled={isAtMin}>
+              <button onClick={decreaseMonth} disabled={isAtMin} className="cursor-pointer">
                 {"<"}
               </button>
 
@@ -138,7 +138,7 @@ export function DateTimePicker({
                 {month} {year}
               </div>
 
-              <button onClick={increaseMonth} disabled={isAtMax}>
+              <button onClick={increaseMonth} disabled={isAtMax} className="cursor-pointer">
                 {">"}
               </button>
             </div>
@@ -153,14 +153,16 @@ export function DateTimePicker({
     }
 
     .react-datepicker-wrapper input {
-      background-color: #1f1f1f !important;
-      color: white !important;
+      background-color: #ffffff !important;
+      color: #000000 !important;
       border: 1px solid #3a3a3a !important;
+      width: 50%;
+      cursor: pointer;
     }
 
-    .react-datepicker { background-color: #1f1f1f !important; border: 1px solid #3a3a3a !important; color: white !important; }
-    .react-datepicker__header { background-color: #1f1f1f !important; border-bottom: 1px solid #3a3a3a !important; }
-    .react-datepicker__day, .react-datepicker__day-name, .react-datepicker__current-month { color: white !important; }
+    .react-datepicker { background-color: #eaeaea !important; border: 1px solid #3a3a3a !important; color: black !important; }
+    .react-datepicker__header { background-color: #eaeaea !important; border-bottom: 1px solid #3a3a3a !important; }
+    .react-datepicker__day, .react-datepicker__day-name, .react-datepicker__current-month { color: black !important; }
     .react-datepicker__day--disabled { color: #777 !important; background-color: #2a2a2a !important; cursor: not-allowed; }
     .react-datepicker__day:not(.react-datepicker__day--disabled):hover { background-color: #333 !important; border-radius: 50%; }
   `}</style>

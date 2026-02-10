@@ -103,7 +103,7 @@ export function ListHistory() {
                     <td colSpan={2} className="px-4 py-2 border-b text-left font-bold">
                       Total
                     </td>
-                    <td className="px-4 py-2 border-b text-right">
+                    <td className="px-4 py-2 border-b text-right font-bold">
                       {formatCurrency((total || 0) / 100)}
                     </td>
                   </tr>

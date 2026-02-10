@@ -43,12 +43,20 @@ export async function manageSubscription(
 
     const subscription = await stripe.subscriptions.retrieve(subscriptionId)
 
+    const priceId = subscription.items.data[0].price.id
+
+    let plan: Plan = "BASIC";
+    
+    if(priceId === process.env.STRIPE_PLAN_PROFISSIONAL){
+        plan = "PROFESSIONAL"
+    }
+
     const subscriptionData = {
         id: subscription.id,
         userId: findUser.id,
         status: subscription.status,
-        priceId: subscription.items.data[0].price.id,
-        plan: type ?? "BASIC"
+        priceId,
+        plan
     }
 
     if(subscriptionId && deleteAction){
@@ -91,7 +99,8 @@ export async function manageSubscription(
                 },
                 data:{
                     status: subscription.status,
-                    priceId: subscription.items.data[0].price.id,
+                    priceId,
+                    plan
                 }
             })
 
