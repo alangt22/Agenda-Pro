@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import { QueryClientContext } from "@/providers/queryclient";
 import { AosInit } from "./(public)/_components/aos-init";
 import NextTopLoader from 'nextjs-toploader'
+import { WebViewWarning } from "@/components/WebViewWarning";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -77,6 +78,8 @@ export default function RootLayout({
               showSpinner={false} 
             />
             <Toaster duration={2500} />
+            <WebViewWarning />
+
             {children}
             <AosInit />
           </QueryClientContext>
