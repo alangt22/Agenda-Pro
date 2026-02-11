@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export function WebViewWarning() {
   const [show, setShow] = useState(false);
@@ -28,7 +29,7 @@ export function WebViewWarning() {
         <button
           onClick={() => {
             navigator.clipboard.writeText(window.location.href);
-            alert(
+            toast.success(
               "Link copiado! Abra o Safari/Chrome e cole na barra de endereço.",
             );
           }}
