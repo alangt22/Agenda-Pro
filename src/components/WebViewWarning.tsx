@@ -19,14 +19,13 @@ export function WebViewWarning() {
         <h2 className="text-xl font-bold mb-2">⚠️ Abra no navegador</h2>
 
         <p className="text-sm opacity-90">
-          Para sua segurança, o login com Google não funciona dentro do LinkedIn,
-          Instagram ou Facebook.
+          Para sua segurança, o login com Google não funciona dentro do LinkedIn ou outros webviews.
           <br />
           Abra este site no Safari ou Chrome.
         </p>
 
         <button
-          onClick={() => window.open(window.location.href, "_blank")}
+          onClick={() => window.open(window.location.href = 'https://www.agendapro.dev/', "_blank")}
           className="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg font-medium"
         >
           Abrir no navegador
